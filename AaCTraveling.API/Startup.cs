@@ -11,31 +11,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace AaCTraveling.API {
-    public class Startup {
+namespace AaCTraveling.API
+{
+    public class Startup
+    {
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration)
+        {
             Configuration = configuration;
         }
-        public void ConfigureServices(IServiceCollection services) {
-            services.AddControllers();
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers(setupAction =>
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                //setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            }).AddXmlDataContractSerializerFormatters();
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
-            services.AddDbContext<AppDbContext>(option => {
-                //option.UseSqlServer("Data Source=localhost;User ID=sa;Password=********;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-                option.UseSqlServer(Configuration["DbContext:ConnectionString"]);
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseMySql(Configuration["DbContext:MySqlConnectionString"], ServerVersion.AutoDetect(Configuration["DbContext:MySqlConnectionString"]));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment()) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 //endpoints.MapGet("/", async context => {
                 //    await context.Response.WriteAsync("Hello FROM TEST!");
                 //});

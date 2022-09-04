@@ -17,8 +17,21 @@ namespace AaCTraveling.API.Controllers {
 
         [HttpGet]
         public IActionResult GetTouristRoutes() {
-            var routes = _touristRouteRepository.GetTouristRoutes();
-            return Ok(routes);
+            var routesFromRepo = _touristRouteRepository.GetTouristRoutes();
+            if(routesFromRepo == null || routesFromRepo.Count() <= 0) {
+                return NotFound("No Tourist Routes Available.");
+            }
+            return Ok(routesFromRepo);
+        }
+
+        //api/touristroutes/{touristRouteId}
+        [HttpGet("{touristRouteId}")]
+        public IActionResult GetTouristRouteById(Guid touristRouteId) {
+            var touristRouteFromRepo = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            if(touristRouteFromRepo == null) {
+                return NotFound($"Route {touristRouteId} Not Found.");
+            }
+            return Ok(touristRouteFromRepo);
         }
     }
 }

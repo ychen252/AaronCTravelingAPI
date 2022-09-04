@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AaCTraveling.API.Models {
-    public class TouristRoute {
-
+namespace AaCTraveling.API.Models
+{
+    public class TouristRoute
+    {
         [Key]
         public Guid Id { get; set; }
         [Required]
@@ -34,7 +35,5 @@ namespace AaCTraveling.API.Models {
         public TravelDays? TravelDays { get; set; }
         public TripType? TripType { get; set; }
         public DepartureCity? DepartureCity { get; set; }
-
-
     }
 }

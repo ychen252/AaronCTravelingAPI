@@ -7,7 +7,6 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\AaCTraveling.API.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\ref\AaCTraveling.API.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\AaCTraveling.API.pdb
-G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.csproj.AssemblyReference.cache
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.GeneratedMSBuildEditorConfig.editorconfig
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.AssemblyInfoInputs.cache
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.AssemblyInfo.cs
@@ -130,3 +129,5 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Database\touristRoutePicturesMockData.json
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Database\touristRoutesMockData.json
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\MySqlConnector.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Pomelo.EntityFrameworkCore.MySql.dll

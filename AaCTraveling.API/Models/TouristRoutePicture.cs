@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AaCTraveling.API.Models {
-    public class TouristRoutePicture {
+namespace AaCTraveling.API.Models
+{
+    public class TouristRoutePicture
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -18,7 +18,6 @@ namespace AaCTraveling.API.Database {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             // set up seeds data
-
             //modelBuilder.Entity<TouristRoute>().HasData(new TouristRoute {
             //    Id = Guid.NewGuid(),
             //    Title = "TestTesttestRoute1",
