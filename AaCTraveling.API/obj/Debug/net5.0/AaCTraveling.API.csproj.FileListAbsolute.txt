@@ -131,3 +131,9 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Database\touristRoutesMockData.json
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\MySqlConnector.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Pomelo.EntityFrameworkCore.MySql.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\AutoMapper.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

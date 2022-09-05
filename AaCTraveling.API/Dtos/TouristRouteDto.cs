@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AaCTraveling.API.Dtos {
-    public class TouristRouteDto {
+namespace AaCTraveling.API.Dtos
+{
+    public class TouristRouteDto
+    {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -19,11 +21,10 @@ namespace AaCTraveling.API.Dtos {
         public string Features { get; set; }
         public string Fees { get; set; }
         public string Notes { get; set; }
-        public ICollection<TouristRoutePicture> TouristRoutePictures { get; set; } = new List<TouristRoutePicture>();
         public double? Rating { get; set; }
         public string TravelDays { get; set; }
         public string TripType { get; set; }
         public string DepartureCity { get; set; }
-
+        public ICollection<TouristRoutePictureDto> TouristRoutePictures { get; set; }
     }
 }
