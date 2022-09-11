@@ -137,3 +137,4 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.csproj.AssemblyReference.cache

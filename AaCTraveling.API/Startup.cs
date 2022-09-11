@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AaCTraveling.API
 {
@@ -25,10 +26,31 @@ namespace AaCTraveling.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(setupAction =>
-            {
-                setupAction.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters();
+            services
+                .AddControllers(setupAction =>
+                {
+                    setupAction.ReturnHttpNotAcceptable = true;
+                })
+                .AddXmlDataContractSerializerFormatters()
+                .ConfigureApiBehaviorOptions(setupAction =>
+                {
+                    setupAction.InvalidModelStateResponseFactory = (actionContext) =>
+                    {
+                        var problemDetail = new ValidationProblemDetails(actionContext.ModelState)
+                        {
+                            Type = "model-validation",
+                            Title = "Model Validation Failed",
+                            Status = StatusCodes.Status422UnprocessableEntity,
+                            Detail = "See details",
+                            Instance = actionContext.HttpContext.Request.Path
+                        };
+                        problemDetail.Extensions.Add("traceId", actionContext.HttpContext.TraceIdentifier);
+                        return new UnprocessableEntityObjectResult(problemDetail)
+                        {
+                            ContentTypes = { "application/problem+json" }
+                        };
+                    };
+                });
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
             services.AddDbContext<AppDbContext>(options =>
             {
