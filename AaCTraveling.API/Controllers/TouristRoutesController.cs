@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace AaCTraveling.API.Controllers
 {
@@ -75,5 +76,42 @@ namespace AaCTraveling.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut("{touristRouteId:Guid}")]
+        public IActionResult UpdateTouristRoute([FromRoute] Guid touristRouteId,
+            [FromBody]TouristRouteForUpdateDto touristRouteForUpdateDto)
+        {
+            var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            if (touristRoute == null)
+            {
+                return NotFound($"route {touristRouteId} was not found.");
+            }
+            _mapper.Map(touristRouteForUpdateDto, touristRoute);
+            _touristRouteRepository.Save();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{touristRouteId:Guid}")]
+        public IActionResult PartiallyUpdateTouristRoute([FromRoute] Guid touristRouteId,
+            [FromBody] JsonPatchDocument<TouristRouteForUpdateDto> patchDocument)
+        {
+            var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            if (touristRoute == null)
+            {
+                return NotFound($"route {touristRouteId} was not found.");
+            }
+            var touristRouteForPatch = _mapper.Map<TouristRouteForUpdateDto>(touristRoute);
+            patchDocument.ApplyTo(touristRouteForPatch, ModelState);
+            if (!TryValidateModel(touristRouteForPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(touristRouteForPatch, touristRoute);
+            _touristRouteRepository.Save();
+
+            return NoContent();
+        }
+
     }
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace AaCTraveling.API
 {
@@ -31,6 +32,12 @@ namespace AaCTraveling.API
                 {
                     setupAction.ReturnHttpNotAcceptable = true;
                 })
+                //newtonSoft
+                .AddNewtonsoftJson(setuoAction =>
+                {
+                    setuoAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                })
+                //xml support
                 .AddXmlDataContractSerializerFormatters()
                 .ConfigureApiBehaviorOptions(setupAction =>
                 {
@@ -59,6 +66,7 @@ namespace AaCTraveling.API
 
             //scan for profile file
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

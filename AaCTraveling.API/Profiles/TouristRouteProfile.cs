@@ -20,6 +20,8 @@ namespace AaCTraveling.API.Profiles
             CreateMap<TouristRouteForCreationDto, TouristRoute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => DateTime.UtcNow));
+            CreateMap<TouristRouteForUpdateDto, TouristRoute>();
+            CreateMap<TouristRoute, TouristRouteForUpdateDto>();
         }
     }
 }

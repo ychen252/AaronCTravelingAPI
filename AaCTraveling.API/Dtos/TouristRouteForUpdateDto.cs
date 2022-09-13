@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace AaCTraveling.API.Dtos
 {
-    public class TouristRouteForCreationDto : TouristRouteForManipulationDto
+    public class TouristRouteForUpdateDto : TouristRouteForManipulationDto
     {
+        [Required(ErrorMessage = "Put request must provide description")]
+        [MaxLength(1500)]
+        public override string Description { get; set; }
     }
 }

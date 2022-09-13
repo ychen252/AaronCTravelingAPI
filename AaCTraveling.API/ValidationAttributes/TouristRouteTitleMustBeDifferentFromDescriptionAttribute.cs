@@ -11,8 +11,8 @@ namespace AaCTraveling.API.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var touristRouteDto = (TouristRouteForCreationDto) validationContext.ObjectInstance;
-            if (touristRouteDto.Title == touristRouteDto.Description)
+            var touristRouteDtoForManipulation = (TouristRouteForManipulationDto) validationContext.ObjectInstance;
+            if (touristRouteDtoForManipulation.Title == touristRouteDtoForManipulation.Description)
             {
                 return new ValidationResult("Tile must be different from Description.",
                     new[] { "TouristRouteForCreationDto" });
