@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
+using AaCTraveling.API.Helper;
 
 namespace AaCTraveling.API.Controllers
 {
@@ -30,10 +31,10 @@ namespace AaCTraveling.API.Controllers
         //api/touristroutes?keyword={keyword}
         [HttpGet]
         [HttpHead]
-        public IActionResult GetTouristRoutes([FromQuery] TouristRouteResourceParameters parameters)
+        public async Task<IActionResult> GetTouristRoutes([FromQuery] TouristRouteResourceParameters parameters)
         {
 
-            var routesFromRepo = _touristRouteRepository.GetTouristRoutes(parameters.Keyword,
+            var routesFromRepo = await _touristRouteRepository.GetTouristRoutesAsync(parameters.Keyword,
                 parameters.RatingOperatorType,
                 parameters.RatingValue);
             if (routesFromRepo == null || routesFromRepo.Count() == 0)
@@ -47,9 +48,9 @@ namespace AaCTraveling.API.Controllers
         //api/touristroutes/{touristRouteId}
         [HttpGet("{touristRouteId:Guid}", Name = "GetTouristRouteById")]
         [HttpHead("{touristRouteId:Guid}", Name = "GetTouristRouteById")]
-        public IActionResult GetTouristRouteById([FromRoute] Guid touristRouteId)
+        public async Task<IActionResult> GetTouristRouteById([FromRoute] Guid touristRouteId)
         {
-            var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
             if (touristRoute == null)
             {
                 return NotFound($"Route {touristRouteId} Not Found.");
@@ -59,11 +60,11 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTouristRoute([FromBody] TouristRouteForCreationDto touristRouteForCreationDto)
+        public async Task<IActionResult> CreateTouristRoute([FromBody] TouristRouteForCreationDto touristRouteForCreationDto)
         {
             var touristRouteModel = _mapper.Map<TouristRoute>(touristRouteForCreationDto);
             _touristRouteRepository.AddTouristRoute(touristRouteModel);
-            if (_touristRouteRepository.Save())
+            if (await _touristRouteRepository.SaveAsync())
             {
                 var touristRouteDtoToReturn = _mapper.Map<TouristRouteDto>(touristRouteModel);
                 return CreatedAtRoute("GetTouristRouteById", new
@@ -78,25 +79,29 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPut("{touristRouteId:Guid}")]
-        public IActionResult UpdateTouristRoute([FromRoute] Guid touristRouteId,
-            [FromBody]TouristRouteForUpdateDto touristRouteForUpdateDto)
+        public async Task<IActionResult> UpdateTouristRoute([FromRoute] Guid touristRouteId,
+            [FromBody] TouristRouteForUpdateDto touristRouteForUpdateDto)
         {
-            var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
             if (touristRoute == null)
             {
                 return NotFound($"route {touristRouteId} was not found.");
             }
+
             _mapper.Map(touristRouteForUpdateDto, touristRoute);
-            _touristRouteRepository.Save();
+            if (!await _touristRouteRepository.SaveAsync())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
 
             return NoContent();
         }
 
         [HttpPatch("{touristRouteId:Guid}")]
-        public IActionResult PartiallyUpdateTouristRoute([FromRoute] Guid touristRouteId,
+        public async Task<IActionResult> PartiallyUpdateTouristRoute([FromRoute] Guid touristRouteId,
             [FromBody] JsonPatchDocument<TouristRouteForUpdateDto> patchDocument)
         {
-            var touristRoute = _touristRouteRepository.GetTouristRoute(touristRouteId);
+            var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
             if (touristRoute == null)
             {
                 return NotFound($"route {touristRouteId} was not found.");
@@ -107,9 +112,49 @@ namespace AaCTraveling.API.Controllers
             {
                 return ValidationProblem(ModelState);
             }
-            _mapper.Map(touristRouteForPatch, touristRoute);
-            _touristRouteRepository.Save();
 
+            _mapper.Map(touristRouteForPatch, touristRoute);
+            if (! await _touristRouteRepository.SaveAsync())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{touristRouteId:Guid}")]
+        public async Task<IActionResult> DeleteTouristRoute([FromRoute] Guid touristRouteId)
+        {
+            var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
+            if (touristRoute == null)
+            {
+                return NotFound($"route {touristRouteId} was not found.");
+            }
+
+            _touristRouteRepository.DeleteTouristRoute(touristRoute);
+            if (! await _touristRouteRepository.SaveAsync())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("({touristRouteIds})")]
+        public async Task<IActionResult> DeleteTouristRouteByIds([ModelBinder(BinderType = typeof(ArrayModelBinder))]
+        [FromRoute] IEnumerable<Guid> touristRouteIds)
+        {
+            if (touristRouteIds == null)
+            {
+                return BadRequest("touristRouteIds is null");
+            }
+            var touristRoutes = await _touristRouteRepository.GetTouristRoutesByIdsAsync(touristRouteIds);
+            _touristRouteRepository.DeleteTouristRoutes(touristRoutes);
+
+            if (! await _touristRouteRepository.SaveAsync())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
             return NoContent();
         }
 

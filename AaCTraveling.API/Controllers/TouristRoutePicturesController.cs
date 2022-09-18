@@ -25,13 +25,13 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPictureListForTouristRoute(Guid touristRouteId)
+        public async Task<IActionResult> GetPictureListForTouristRoute(Guid touristRouteId)
         {
-            if (!_touristRouteRepository.TouristRouteExists(touristRouteId))
+            if (!await _touristRouteRepository.TouristRouteExistsAsync(touristRouteId))
             {
                 return NotFound($"route {touristRouteId} was not found.");
             }
-            var touristRoutePictures = _touristRouteRepository.GetPicturesByTouristRouteId(touristRouteId);
+            var touristRoutePictures = await _touristRouteRepository.GetPicturesByTouristRouteIdAsync(touristRouteId);
             if (touristRoutePictures == null || touristRoutePictures.Count() == 0)
             {
                 return NotFound("No pictures found.");
@@ -41,14 +41,14 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpGet("{pictureId}", Name = "GetPicture")]
-        public IActionResult GetPicture(Guid touristRouteId, int pictureId)
+        public async Task<IActionResult> GetPicture([FromRoute] Guid touristRouteId, [FromRoute] int pictureId)
         {
-            if (!_touristRouteRepository.TouristRouteExists(touristRouteId))
+            if (!await _touristRouteRepository.TouristRouteExistsAsync(touristRouteId))
             {
                 return NotFound($"route {touristRouteId} was not found.");
             }
-            var picture = _touristRouteRepository.GetPicture(pictureId);
-            if(picture == null)
+            var picture = await _touristRouteRepository.GetPictureAsync(pictureId);
+            if (picture == null)
             {
                 return NotFound("No pictures found.");
             }
@@ -56,16 +56,16 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTouristRoutePicture([FromRoute] Guid touristRouteId, 
+        public async Task<IActionResult> CreateTouristRoutePicture([FromRoute] Guid touristRouteId,
             [FromBody] TouristRoutePictureForCreationDto touristRoutePictureForCreationDto)
         {
-            if (!_touristRouteRepository.TouristRouteExists(touristRouteId))
+            if (!await _touristRouteRepository.TouristRouteExistsAsync(touristRouteId))
             {
                 return NotFound($"route {touristRouteId} was not found.");
             }
             var pictureModel = _mapper.Map<TouristRoutePicture>(touristRoutePictureForCreationDto);
             _touristRouteRepository.AddTouristRoutePicture(touristRouteId, pictureModel);
-            if (_touristRouteRepository.Save())
+            if (await _touristRouteRepository.SaveAsync())
             {
                 var touristRoutePictureDtoToReturn = _mapper.Map<TouristRoutePictureDto>(pictureModel);
                 return CreatedAtRoute("GetTouristRouteById", new
@@ -77,6 +77,25 @@ namespace AaCTraveling.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpDelete("{pictureId}")]
+        public async Task<IActionResult> DeleteTouristRoutePicture([FromRoute] Guid touristRouteId,
+            [FromRoute] int pictureId)
+        {
+            if (!await _touristRouteRepository.TouristRouteExistsAsync(touristRouteId))
+            {
+                return NotFound($"route {touristRouteId} was not found.");
+            }
+            var picture = await _touristRouteRepository.GetPictureAsync(pictureId);
+            _touristRouteRepository.DeleteTouristRoutePicture(picture);
+
+            if (!await _touristRouteRepository.SaveAsync())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return NoContent();
         }
     }
 }

@@ -8,13 +8,17 @@ namespace AaCTraveling.API.Services
 {
     public interface ITouristRouteRepository
     {
-        IEnumerable<TouristRoute> GetTouristRoutes(string keyword, string operationType, int? ratingValue);
-        TouristRoute GetTouristRoute(Guid touristRouteId);
-        bool TouristRouteExists(Guid touristRouteId);
-        IEnumerable<TouristRoutePicture> GetPicturesByTouristRouteId(Guid touristRouteId);
-        TouristRoutePicture GetPicture(int pictureId);
+        Task<IEnumerable<TouristRoute>> GetTouristRoutesAsync(string keyword, string operationType, int? ratingValue);
+        Task<TouristRoute> GetTouristRouteAsync(Guid touristRouteId);
+        Task<IEnumerable<TouristRoute>> GetTouristRoutesByIdsAsync(IEnumerable<Guid> touristRouteIds);
+        Task<bool> TouristRouteExistsAsync(Guid touristRouteId);
+        Task<IEnumerable<TouristRoutePicture>> GetPicturesByTouristRouteIdAsync(Guid touristRouteId);
+        Task<TouristRoutePicture> GetPictureAsync(int pictureId);
         void AddTouristRoute(TouristRoute touristRoute);
         void AddTouristRoutePicture(Guid touristRouteId, TouristRoutePicture touristRoutePicture);
-        bool Save();
+        void DeleteTouristRoute(TouristRoute touristRoute);
+        void DeleteTouristRoutes(IEnumerable<TouristRoute> touristRoutes);
+        void DeleteTouristRoutePicture(TouristRoutePicture touristRoutePicture);
+        Task<bool> SaveAsync();
     }
 }
