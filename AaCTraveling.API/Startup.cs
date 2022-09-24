@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace AaCTraveling.API
 {
@@ -27,6 +30,24 @@ namespace AaCTraveling.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    var secretKey = Encoding.UTF8.GetBytes(Configuration["Authentication:SecretKey"]);
+                    options.TokenValidationParameters
+                   = new TokenValidationParameters()
+                   {
+                       ValidateIssuer = true,
+                       ValidIssuer = Configuration["Authentication:Issuer"],
+
+                       ValidateAudience = true,
+                       ValidAudience = Configuration["Authentication:Audience"],
+
+                       ValidateLifetime = true,
+
+                       IssuerSigningKey = new SymmetricSecurityKey(secretKey)
+                   };
+                });
             services
                 .AddControllers(setupAction =>
                 {
@@ -78,6 +99,10 @@ namespace AaCTraveling.API
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

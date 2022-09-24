@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using AaCTraveling.API.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AaCTraveling.API.Controllers
 {
@@ -60,6 +61,7 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateTouristRoute([FromBody] TouristRouteForCreationDto touristRouteForCreationDto)
         {
             var touristRouteModel = _mapper.Map<TouristRoute>(touristRouteForCreationDto);
