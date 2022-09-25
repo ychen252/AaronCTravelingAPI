@@ -138,7 +138,11 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
-G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.csproj.AssemblyReference.cache
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll

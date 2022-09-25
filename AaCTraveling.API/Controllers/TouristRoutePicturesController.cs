@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AaCTraveling.API.Dtos;
 using AaCTraveling.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AaCTraveling.API.Controllers
 {
@@ -56,6 +57,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateTouristRoutePicture([FromRoute] Guid touristRouteId,
             [FromBody] TouristRoutePictureForCreationDto touristRoutePictureForCreationDto)
         {
@@ -80,6 +83,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpDelete("{pictureId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTouristRoutePicture([FromRoute] Guid touristRouteId,
             [FromRoute] int pictureId)
         {

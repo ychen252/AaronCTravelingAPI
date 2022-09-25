@@ -17,6 +17,9 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using AaCTraveling.API.Models;
 
 namespace AaCTraveling.API
 {
@@ -30,6 +33,16 @@ namespace AaCTraveling.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -48,6 +61,14 @@ namespace AaCTraveling.API
                        IssuerSigningKey = new SymmetricSecurityKey(secretKey)
                    };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+            });
+
             services
                 .AddControllers(setupAction =>
                 {
@@ -79,7 +100,10 @@ namespace AaCTraveling.API
                         };
                     };
                 });
+            //custom services
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
+
+            //db service
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseMySql(Configuration["DbContext:MySqlConnectionString"], ServerVersion.AutoDetect(Configuration["DbContext:MySqlConnectionString"]));

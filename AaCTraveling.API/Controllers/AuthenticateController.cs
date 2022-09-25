@@ -1,5 +1,7 @@
 ﻿using AaCTraveling.API.Dtos;
+using AaCTraveling.API.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,28 +20,46 @@ namespace AaCTraveling.API.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AuthenticateController (IConfiguration configration)
+        public AuthenticateController(IConfiguration configuration,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
-            _configuration = configration;
+            _configuration = configuration;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             // check email and password
-            // create jwt
-            var signInAlgorithm = SecurityAlgorithms.HmacSha256;
+            var loginResult = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, false, false);
 
-            var claims = new[]
+            if (!loginResult.Succeeded)
             {
-                new Claim(JwtRegisteredClaimNames.Sub, "fake_user_id")
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByNameAsync(loginDto.Email);
+            var roleNames = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
             };
+
+            for (int i = 0; i < roleNames.Count; i++)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, roleNames[i]));
+            }
 
             var secretKey = Encoding.UTF8.GetBytes(_configuration["Authentication:SecretKey"]);
             var signingKey = new SymmetricSecurityKey(secretKey);
-            var signingCredentials = new SigningCredentials(signingKey, signInAlgorithm);
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Authentication:Issuer"],
@@ -53,6 +73,26 @@ namespace AaCTraveling.API.Controllers
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
             return Ok(tokenString);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        {
+            var user = new ApplicationUser()
+            {
+                UserName = registerDto.Email,
+                Email = registerDto.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

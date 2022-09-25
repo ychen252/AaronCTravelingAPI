@@ -61,7 +61,9 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPost]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateTouristRoute([FromBody] TouristRouteForCreationDto touristRouteForCreationDto)
         {
             var touristRouteModel = _mapper.Map<TouristRoute>(touristRouteForCreationDto);
@@ -81,6 +83,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPut("{touristRouteId:Guid}")]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateTouristRoute([FromRoute] Guid touristRouteId,
             [FromBody] TouristRouteForUpdateDto touristRouteForUpdateDto)
         {
@@ -100,6 +104,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpPatch("{touristRouteId:Guid}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PartiallyUpdateTouristRoute([FromRoute] Guid touristRouteId,
             [FromBody] JsonPatchDocument<TouristRouteForUpdateDto> patchDocument)
         {
@@ -125,6 +131,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpDelete("{touristRouteId:Guid}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTouristRoute([FromRoute] Guid touristRouteId)
         {
             var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
@@ -143,6 +151,8 @@ namespace AaCTraveling.API.Controllers
         }
 
         [HttpDelete("({touristRouteIds})")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTouristRouteByIds([ModelBinder(BinderType = typeof(ArrayModelBinder))]
         [FromRoute] IEnumerable<Guid> touristRouteIds)
         {

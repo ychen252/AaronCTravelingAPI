@@ -7,16 +7,22 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-namespace AaCTraveling.API.Database {
-    public class AppDbContext : DbContext {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
+namespace AaCTraveling.API.Database
+{
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
 
         }
         public DbSet<TouristRoute> TouristRoutes { get; set; }
         public DbSet<TouristRoutePicture> TouristRoutePictures { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
             // set up seeds data
             //modelBuilder.Entity<TouristRoute>().HasData(new TouristRoute {
             //    Id = Guid.NewGuid(),
@@ -32,6 +38,15 @@ namespace AaCTraveling.API.Database {
             var touristRoutePictureJsonData = File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"/Database/touristRoutePicturesMockData.json");
             IList<TouristRoutePicture> touristRoutePictures = JsonConvert.DeserializeObject<IList<TouristRoutePicture>>(touristRoutePictureJsonData);
             modelBuilder.Entity<TouristRoutePicture>().HasData(touristRoutePictures);
+
+            modelBuilder.Entity<ApplicationUser>(u =>
+                u.HasMany(x => x.UserRoles)
+                 .WithOne().HasForeignKey(ur => ur.UserId).IsRequired());
+
+            //var adminRoleID = "guid";
+            //modelBuilder.Entity<IdentityROle>
+
+
 
             base.OnModelCreating(modelBuilder);
         }
