@@ -20,6 +20,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using AaCTraveling.API.Models;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace AaCTraveling.API
 {
@@ -40,8 +41,8 @@ namespace AaCTraveling.API
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            })
-                .AddEntityFrameworkStores<AppDbContext>();
+                options.ClaimsIdentity.UserIdClaimType = "Id";
+            }).AddEntityFrameworkStores<AppDbContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -112,6 +113,9 @@ namespace AaCTraveling.API
             //scan for profile file
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddHttpClient();
+
+            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.4" />
+    <PackageReference Include="stateless" Version="5.11.0" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties database_4touristroutepicturesmockdata_1json__JsonSchema="utf-8" /></VisualStudio></ProjectExtensions>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZRpTzcg+nhHr42mQF1k/AQIlxGqrtp38wW/qiYKc25a6IC60KUSwXRYyA25YbS2GDCYlLhUlekvrr9WWlD7P8Q==",
+  "dgSpecHash": "m+qvJJkDSW4V3hpsob1WMfMLFfMp8Yf1vEwUnbvkcUqLOHygFhz+rIJakOh9K8C9FVpgB74+x04WrKExbDxFJw==",
   "success": true,
   "projectFilePath": "G:\\CSharpWorkspace\\TravellingAPI\\AaCTraveling.API\\AaCTraveling.API\\AaCTraveling.API.csproj",
   "expectedPackageFiles": [
@@ -68,6 +68,7 @@
     "C:\\Users\\cyh_c\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\5.0.4\\pomelo.entityframeworkcore.mysql.5.0.4.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
+    "C:\\Users\\cyh_c\\.nuget\\packages\\stateless\\5.11.0\\stateless.5.11.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512",
@@ -140,7 +141,8 @@
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\cyh_c\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\cyh_c\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
   ],
   "logs": []
 }

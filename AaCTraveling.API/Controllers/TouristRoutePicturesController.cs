@@ -67,7 +67,7 @@ namespace AaCTraveling.API.Controllers
                 return NotFound($"route {touristRouteId} was not found.");
             }
             var pictureModel = _mapper.Map<TouristRoutePicture>(touristRoutePictureForCreationDto);
-            _touristRouteRepository.AddTouristRoutePicture(touristRouteId, pictureModel);
+            await _touristRouteRepository.AddTouristRoutePictureAsync(touristRouteId, pictureModel);
             if (await _touristRouteRepository.SaveAsync())
             {
                 var touristRoutePictureDtoToReturn = _mapper.Map<TouristRoutePictureDto>(pictureModel);

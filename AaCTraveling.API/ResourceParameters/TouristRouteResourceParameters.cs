@@ -11,7 +11,10 @@ namespace AaCTraveling.API.ResourceParameters
         public string Keyword { get; set; }
         public string Rating
         {
-            get { return Rating; }
+            get
+            {
+                return _rating;
+            }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
@@ -26,8 +29,8 @@ namespace AaCTraveling.API.ResourceParameters
                 }
             }
         }
-
         public string RatingOperatorType { set; get; }
         public int? RatingValue { get; set; }
+        private string _rating;
     }
 }
