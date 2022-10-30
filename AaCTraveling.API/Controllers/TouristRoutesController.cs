@@ -50,7 +50,8 @@ namespace AaCTraveling.API.Controllers
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber - 1,
                         pageSize = paginationResourceParameters.PageSize,
-                        orderBy = parameters.OrderBy
+                        orderBy = parameters.OrderBy,
+                        fields = parameters.Fields
                     }),
                 ResourceUriType.NextPage => Url.Link("GetTouristRoutes",
                     new
@@ -59,7 +60,8 @@ namespace AaCTraveling.API.Controllers
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber + 1,
                         pageSize = paginationResourceParameters.PageSize,
-                        orderBy = parameters.OrderBy
+                        orderBy = parameters.OrderBy,
+                        fields = parameters.Fields
                     }),
                 _ => Url.Link("GetTouristRoutes",
                     new
@@ -68,7 +70,8 @@ namespace AaCTraveling.API.Controllers
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber,
                         pageSize = paginationResourceParameters.PageSize,
-                        orderBy = parameters.OrderBy
+                        orderBy = parameters.OrderBy,
+                        fields = parameters.Fields
                     }),
             };
         }
@@ -83,6 +86,11 @@ namespace AaCTraveling.API.Controllers
             if (!_propertyMappingService.AreMappingPropertiesExisting<TouristRouteDto, TouristRoute>(parameters.OrderBy))
             {
                 return BadRequest("Invalid input in the sorting parameters.");
+            }
+            
+            if (!_propertyMappingService.ArePropertiesExisting<TouristRouteDto>(parameters.Fields))
+            {
+                return BadRequest("Invalid input in the fields parameters.");
             }
 
             var routesFromRepo = await _touristRouteRepository.GetTouristRoutesAsync(parameters.Keyword,
@@ -119,21 +127,26 @@ namespace AaCTraveling.API.Controllers
 
             Response.Headers.Add("x-pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetaData));
 
-            return Ok(touristRoutesDto);
+            return Ok(touristRoutesDto.ShapeData(parameters.Fields));
         }
 
         //api/touristroutes/{touristRouteId}
         [HttpGet("{touristRouteId:Guid}", Name = "GetTouristRouteById")]
         [HttpHead("{touristRouteId:Guid}", Name = "GetTouristRouteById")]
-        public async Task<IActionResult> GetTouristRouteById([FromRoute] Guid touristRouteId)
+        public async Task<IActionResult> GetTouristRouteById([FromRoute] Guid touristRouteId, [FromQuery]string fields)
         {
+            if (!_propertyMappingService.ArePropertiesExisting<TouristRouteDto>(fields))
+            {
+                return BadRequest("Invalid input in the fields parameters.");
+            }
+
             var touristRoute = await _touristRouteRepository.GetTouristRouteAsync(touristRouteId);
             if (touristRoute == null)
             {
                 return NotFound($"Route {touristRouteId} Not Found.");
             }
             var touristRouteDto = _mapper.Map<TouristRouteDto>(touristRoute);
-            return Ok(touristRouteDto);
+            return Ok(touristRouteDto.ShapeData(fields));
         }
 
         [HttpPost]

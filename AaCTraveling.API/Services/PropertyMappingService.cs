@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace AaCTraveling.API.Services
 {
@@ -54,6 +55,29 @@ namespace AaCTraveling.API.Services
                 var indexOfFirstSpace = trimmedField.IndexOf(" ");
                 var propertyName = indexOfFirstSpace == -1 ? trimmedField : trimmedField.Remove(indexOfFirstSpace);
                 if (!propertyMapping.ContainsKey(propertyName))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool ArePropertiesExisting<T>(string fields)
+        {
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                return true;
+            }
+
+            var fieldsAfterSplit = fields.Split(',');
+            
+            foreach (var field in fieldsAfterSplit)
+            {
+                var propertyName = field.Trim();
+                var propertyInfo = typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase 
+                    | BindingFlags.Public | BindingFlags.Instance);
+                if (propertyInfo == null)
                 {
                     return false;
                 }

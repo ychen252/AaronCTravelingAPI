@@ -6,5 +6,6 @@ namespace AaCTraveling.API.Services
     {
         Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>();
         bool AreMappingPropertiesExisting<TSource, TDestination>(string fields);
+        bool ArePropertiesExisting<T>(string fields);
     }
 }
