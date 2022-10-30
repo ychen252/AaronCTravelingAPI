@@ -147,3 +147,4 @@ G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.pdb
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\AaCTraveling.API.genruntimeconfig.cache
 G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\obj\Debug\net5.0\ref\AaCTraveling.API.dll
+G:\CSharpWorkspace\TravellingAPI\AaCTraveling.API\AaCTraveling.API\bin\Debug\net5.0\System.Linq.Dynamic.Core.dll

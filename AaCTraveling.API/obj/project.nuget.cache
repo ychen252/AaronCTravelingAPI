@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "m+qvJJkDSW4V3hpsob1WMfMLFfMp8Yf1vEwUnbvkcUqLOHygFhz+rIJakOh9K8C9FVpgB74+x04WrKExbDxFJw==",
+  "dgSpecHash": "Fa5UqE4yLk/tCpZ+u2nXMz2kyw9azdBVcaYVYC+pakLNFTCC3gdK9kBjuzrXT9bKkkiYI3mL7+aYG4O32YuYBw==",
   "success": true,
   "projectFilePath": "G:\\CSharpWorkspace\\TravellingAPI\\AaCTraveling.API\\AaCTraveling.API\\AaCTraveling.API.csproj",
   "expectedPackageFiles": [
@@ -97,6 +97,7 @@
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
+    "C:\\Users\\cyh_c\\.nuget\\packages\\system.linq.dynamic.core\\1.2.21\\system.linq.dynamic.core.1.2.21.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",

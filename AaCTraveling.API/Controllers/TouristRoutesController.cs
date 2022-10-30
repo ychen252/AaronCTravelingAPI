@@ -24,12 +24,16 @@ namespace AaCTraveling.API.Controllers
     {
         private readonly ITouristRouteRepository _touristRouteRepository;
         private readonly IMapper _mapper;
+        private readonly IPropertyMappingService _propertyMappingService;
         //private readonly IUrlHelper _urlHelper;
 
-        public TouristRoutesController(ITouristRouteRepository touristRouteRepository, IMapper mapper)
+        public TouristRoutesController(ITouristRouteRepository touristRouteRepository,
+            IMapper mapper,
+            IPropertyMappingService propertyMappingService)
         {
             _touristRouteRepository = touristRouteRepository;
             _mapper = mapper;
+            _propertyMappingService = propertyMappingService;
             //_urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
         }
 
@@ -45,7 +49,8 @@ namespace AaCTraveling.API.Controllers
                         keyword = parameters.Keyword,
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber - 1,
-                        pageSize = paginationResourceParameters.PageSize
+                        pageSize = paginationResourceParameters.PageSize,
+                        orderBy = parameters.OrderBy
                     }),
                 ResourceUriType.NextPage => Url.Link("GetTouristRoutes",
                     new
@@ -53,7 +58,8 @@ namespace AaCTraveling.API.Controllers
                         keyword = parameters.Keyword,
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber + 1,
-                        pageSize = paginationResourceParameters.PageSize
+                        pageSize = paginationResourceParameters.PageSize,
+                        orderBy = parameters.OrderBy
                     }),
                 _ => Url.Link("GetTouristRoutes",
                     new
@@ -61,7 +67,8 @@ namespace AaCTraveling.API.Controllers
                         keyword = parameters.Keyword,
                         rating = parameters.Rating,
                         pageNumber = paginationResourceParameters.PageNumber,
-                        pageSize = paginationResourceParameters.PageSize
+                        pageSize = paginationResourceParameters.PageSize,
+                        orderBy = parameters.OrderBy
                     }),
             };
         }
@@ -73,11 +80,17 @@ namespace AaCTraveling.API.Controllers
             [FromQuery] PaginationResourceParameters paginationResourceParameters)
         {
 
+            if (!_propertyMappingService.AreMappingPropertiesExisting<TouristRouteDto, TouristRoute>(parameters.OrderBy))
+            {
+                return BadRequest("Invalid input in the sorting parameters.");
+            }
+
             var routesFromRepo = await _touristRouteRepository.GetTouristRoutesAsync(parameters.Keyword,
                 parameters.RatingOperatorType,
                 parameters.RatingValue,
                 paginationResourceParameters.PageSize,
-                paginationResourceParameters.PageNumber);
+                paginationResourceParameters.PageNumber,
+                parameters.OrderBy);
 
             if (routesFromRepo == null || routesFromRepo.Count() == 0)
             {

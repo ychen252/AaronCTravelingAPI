@@ -30,6 +30,7 @@ namespace AaCTraveling.API.ResourceParameters
             }
         }
         public string RatingOperatorType { set; get; }
+        public string OrderBy { get; set; }
         public int? RatingValue { get; set; }
         private string _rating;
     }

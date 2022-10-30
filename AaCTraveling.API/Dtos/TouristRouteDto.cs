@@ -13,8 +13,8 @@ namespace AaCTraveling.API.Dtos
         public string Description { get; set; }
         // Price = OriginalPrice * DiscountPresent
         public decimal Price { get; set; }
-        //public decimal OriginalPrice { get; set; }
-        //public double? DiscountPresent { get; set; }
+        public decimal OriginalPrice { get; set; }
+        public double? DiscountPercent { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? UpdateTime { get; set; }
         public DateTime? DepartureTime { get; set; }

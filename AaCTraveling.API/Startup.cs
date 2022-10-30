@@ -103,6 +103,7 @@ namespace AaCTraveling.API
                 });
             //custom services
             services.AddTransient<ITouristRouteRepository, TouristRouteRepository>();
+            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
 
             //db service
             services.AddDbContext<AppDbContext>(options =>

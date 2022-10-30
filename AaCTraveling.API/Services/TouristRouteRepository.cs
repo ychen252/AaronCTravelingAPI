@@ -1,4 +1,5 @@
 ﻿using AaCTraveling.API.Database;
+using AaCTraveling.API.Dtos;
 using AaCTraveling.API.Helper;
 using AaCTraveling.API.Models;
 using Microsoft.AspNetCore.JsonPatch.Operations;
@@ -16,9 +17,13 @@ namespace AaCTraveling.API.Services
     public class TouristRouteRepository : ITouristRouteRepository
     {
         private readonly AppDbContext _context;
-        public TouristRouteRepository(AppDbContext context)
+        private readonly IPropertyMappingService _propertyMappingService;
+        
+        public TouristRouteRepository(AppDbContext context,
+            IPropertyMappingService propertyMappingService)
         {
             _context = context;
+            _propertyMappingService = propertyMappingService;
         }
 
         public async Task AddOrderAsync(Order order)
@@ -33,26 +38,26 @@ namespace AaCTraveling.API.Services
 
         public async Task AddTouristRouteAsync(TouristRoute touristRoute)
         {
-            if(touristRoute == null)
+            if (touristRoute == null)
             {
                 throw new ArgumentNullException(nameof(touristRoute));
             }
-            
+
             await _context.TouristRoutes.AddAsync(touristRoute);
         }
 
         public async Task AddTouristRoutePictureAsync(Guid touristRouteId, TouristRoutePicture touristRoutePicture)
         {
-            if(touristRouteId == Guid.Empty)
+            if (touristRouteId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(touristRouteId));
             }
-            
-            if(touristRoutePicture == null)
+
+            if (touristRoutePicture == null)
             {
                 throw new ArgumentNullException(nameof(touristRoutePicture));
             }
-            
+
             touristRoutePicture.TouristRouteId = touristRouteId;
             await _context.TouristRoutePictures.AddAsync(touristRoutePicture);
         }
@@ -100,7 +105,7 @@ namespace AaCTraveling.API.Services
             var orders = _context.Orders.Where(o => o.UserId == userId);
             return await PaginationList<Order>.CreateAsync(orders, pageNumber, PageSize);
         }
-        
+
         public async Task<TouristRoutePicture> GetPictureAsync(int pictureId)
         {
             return await _context.TouristRoutePictures.FirstOrDefaultAsync(tp => tp.Id == pictureId);
@@ -136,18 +141,19 @@ namespace AaCTraveling.API.Services
         }
 
         public async Task<PaginationList<TouristRoute>> GetTouristRoutesAsync(string keyword, string operationType,
-            int? ratingValue, int pageSize, int pageNumber)
+            int? ratingValue, int pageSize, int pageNumber, string orderBy)
         {
             IQueryable<TouristRoute> result = _context.TouristRoutes
                 .Include(t => t.TouristRoutePictures);
-            
+
             if (!string.IsNullOrWhiteSpace(keyword))
             {
                 keyword = keyword.Trim();
                 result = result.Where(t => t.Title.Contains(keyword));
             }
-            
-            if (ratingValue!= null && ratingValue >= 0)
+
+
+            if (ratingValue != null && ratingValue >= 0)
             {
                 result = operationType.ToLower() switch
                 {
@@ -155,6 +161,12 @@ namespace AaCTraveling.API.Services
                     "lessthan" => result.Where(t => t.Rating <= ratingValue),
                     _ => result.Where(t => t.Rating == ratingValue),
                 };
+            }
+
+            if (!string.IsNullOrWhiteSpace(orderBy))
+            {
+                var _mappingDictionary = _propertyMappingService.GetPropertyMapping<TouristRouteDto, TouristRoute>();
+                result = result.ApplySort(orderBy, _mappingDictionary);
             }
 
             //pagination

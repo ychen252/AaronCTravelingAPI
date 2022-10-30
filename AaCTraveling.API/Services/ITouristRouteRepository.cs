@@ -27,8 +27,8 @@ namespace AaCTraveling.API.Services
         Task<LineItem> GetShoppingCartItemByItemIdAsync(int lineItemId);
         Task<IEnumerable<LineItem>> GetShoppingCartItemsByItemIdsAsync(IEnumerable<int> lineItemIds);
         Task<TouristRoute> GetTouristRouteAsync(Guid touristRouteId);
-        Task<PaginationList<TouristRoute>> GetTouristRoutesAsync(string keyword, string operationType, int? ratingValue, 
-            int pageSize, int PageNumber);
+        Task<PaginationList<TouristRoute>> GetTouristRoutesAsync(string keyword, string operationType, int? ratingValue,
+            int pageSize, int PageNumber, string orderBy);
         Task<IEnumerable<TouristRoute>> GetTouristRoutesByIdsAsync(IEnumerable<Guid> touristRouteIds);
         Task<bool> SaveAsync();
         Task<bool> TouristRouteExistsAsync(Guid touristRouteId);

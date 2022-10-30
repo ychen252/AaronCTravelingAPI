@@ -29,10 +29,10 @@ namespace AaCTraveling.API.Helper
         public static async Task<PaginationList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
         {
             var totalCount = await source.CountAsync();
-            
+
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return new PaginationList<T>(items, pageNumber, pageSize,totalCount);
+            return new PaginationList<T>(items, pageNumber, pageSize, totalCount);
         }
     }
 
