@@ -116,7 +116,17 @@ namespace AaCTraveling.API
 
             services.AddHttpClient();
 
-            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            //add vendor media type
+            services.Configure<MvcOptions>(config =>
+            {
+                var outputFormatter = config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                if (outputFormatter != null)
+                {
+                    outputFormatter.SupportedMediaTypes.Add("application/vnd.aac.hateoas+json");
+                }
+            });
+            //cors
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,6 +136,8 @@ namespace AaCTraveling.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true).AllowCredentials());
 
             app.UseRouting();
 

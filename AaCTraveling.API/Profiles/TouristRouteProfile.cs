@@ -22,6 +22,8 @@ namespace AaCTraveling.API.Profiles
                 .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => DateTime.UtcNow));
             CreateMap<TouristRouteForUpdateDto, TouristRoute>();
             CreateMap<TouristRoute, TouristRouteForUpdateDto>();
+            CreateMap<TouristRoute, TouristRouteSlimDto>()
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.OriginalPrice * (decimal) (src.DiscountPercent ?? 1)));
         }
     }
 }

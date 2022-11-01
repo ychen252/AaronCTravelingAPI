@@ -33,8 +33,8 @@ namespace AaCTraveling.API.Controllers
             _touristRouteRepository = touristRouteRepository;
             _mapper = mapper;
         }
-        
-        [HttpGet]
+
+        [HttpGet(Name = "GetShoppingCart")]
         [Authorize]
         public async Task<IActionResult> GetShoppingCart()
         {

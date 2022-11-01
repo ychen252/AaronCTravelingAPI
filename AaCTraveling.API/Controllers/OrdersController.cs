@@ -35,7 +35,7 @@ namespace AaCTraveling.API.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetOrders")]
         [Authorize]
         public async Task<IActionResult> GetOrders([FromQuery] PaginationResourceParameters paginationResourceParameters)
         {
