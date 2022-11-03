@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Fa5UqE4yLk/tCpZ+u2nXMz2kyw9azdBVcaYVYC+pakLNFTCC3gdK9kBjuzrXT9bKkkiYI3mL7+aYG4O32YuYBw==",
+  "dgSpecHash": "MSjLYav+q3j4glryNADvYSRKlsGR1djLR6uy+mabohKMK/jx+/0frM8uLo4ySdmYBDVtybFeV8aR2MhiL4p93A==",
   "success": true,
   "projectFilePath": "G:\\CSharpWorkspace\\TravellingAPI\\AaCTraveling.API\\AaCTraveling.API\\AaCTraveling.API.csproj",
   "expectedPackageFiles": [
@@ -53,6 +53,7 @@
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.7.1\\microsoft.identitymodel.tokens.6.7.1.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
+    "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\5.0.2\\microsoft.visualstudio.web.codegeneration.5.0.2.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\5.0.2\\microsoft.visualstudio.web.codegeneration.contracts.5.0.2.nupkg.sha512",
     "C:\\Users\\cyh_c\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\5.0.2\\microsoft.visualstudio.web.codegeneration.core.5.0.2.nupkg.sha512",
